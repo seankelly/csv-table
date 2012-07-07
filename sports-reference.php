@@ -73,6 +73,10 @@ class srTable {
             $closing_tag = '</td>';
         }
 
+        foreach ($columns as &$col) {
+            $col = htmlspecialchars($col);
+        }
+
         return ($opening_tag
                 . implode($closing_tag . $opening_tag, $columns)
                 . $closing_tag);
