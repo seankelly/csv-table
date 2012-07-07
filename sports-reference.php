@@ -55,7 +55,9 @@ class srTable {
             array_push($final_html, srTable::make_row($is_header, $fields));
         }
 
-        return '<!--' . implode("\n", $final_html) . '-->';
+        return ('<table>'
+               . implode("", $final_html)
+               . '</table>');
     }
 
     public function make_row($is_header, $columns) {
@@ -72,9 +74,11 @@ class srTable {
             $col = htmlspecialchars($col);
         }
 
-        return ($opening_tag
+        return ('<tr>'
+                . $opening_tag
                 . implode($closing_tag . $opening_tag, $columns)
-                . $closing_tag);
+                . $closing_tag
+                . '</tr>');
     }
 }
 
