@@ -44,7 +44,7 @@ class srTable {
             // Count the number of a-z character to try guess if it's a header.
             $count = preg_match_all('/[a-z]/i', $row, $matches);
             $len = strlen($row);
-            if (($count / $len) > 0.5) {
+            if (($len > 0) && (($count / $len) > 0.5)) {
                 $is_header = TRUE;
                 $opening_tag = '<td>';
                 $closing_tag = '</td>';
