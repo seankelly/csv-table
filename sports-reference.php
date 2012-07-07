@@ -90,7 +90,14 @@ class srTable {
         $count = preg_match_all('/[a-z]/i', $column, $matches);
         $len = strlen($column);
         if (($count / $len) > 0.75) {
-            $align = ' class="left"';
+            $align = ' align="left"';
+        }
+        else {
+            $align = ' align="right"';
+        }
+
+        if ($tag === 'th') {
+            $align = ' align="center"';
         }
 
         return ('<' . $tag . $align . '>'
