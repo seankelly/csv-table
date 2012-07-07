@@ -20,11 +20,6 @@ table.sports-reference th {
     font-weight: bold;
 }
 
-table.sports-reference th.sortable {
-    color: rgb(170, 0, 0);
-    cursor: pointer;
-}
-
 table.sports-reference td {
     border: 1px dotted;
 }
@@ -37,4 +32,24 @@ table.sports-reference tr td:first-child {
 table.sports-reference tr th:last-child,
 table.sports-reference tr td:last-child {
     border-right: 1px solid rgb(116, 118, 120);
+}
+
+table.sports-reference th.sortable {
+    color: rgb(170, 0, 0);
+    cursor: pointer;
+}
+
+table.sports-reference td.sorted {
+    background-color: rgb(255, 255, 170);
+    border-left: 2px solid rgb(116, 118, 120);
+    border-right: 2px solid rgb(116, 118, 120);
+}
+
+table.sports-reference th.sorted {
+    background-color: rgb(255, 255, 170);
+    border: 2px solid rgb(116, 118, 120);
+}
+
+table.sports-reference tr:last-child td.sorted {
+    border-bottom: 2px solid rgb(116, 118, 120);
 }
