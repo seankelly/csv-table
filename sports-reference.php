@@ -52,13 +52,9 @@ class srTable {
             $count = preg_match_all('/[a-z]/i', $row, $matches);
             if (($count / $len) > 0.5) {
                 $is_header = TRUE;
-                $opening_tag = '<td>';
-                $closing_tag = '</td>';
             }
             else {
                 $is_header = FALSE;
-                $opening_tag = '<th>';
-                $closing_tag = '</th>';
             }
 
             array_push($final_html, srTable::make_row($is_header, $fields));
