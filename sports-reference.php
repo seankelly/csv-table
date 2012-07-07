@@ -60,7 +60,7 @@ class srTable {
                . '</table>');
     }
 
-    public function make_row($is_header, $columns) {
+    private function make_row($is_header, $columns) {
         if ($is_header) {
             $opening_tag = '<th>';
             $closing_tag = '</th>';
