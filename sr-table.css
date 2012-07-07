@@ -23,6 +23,12 @@ table.sports-reference th {
 
 table.sports-reference td {
     border: 1px dotted;
+    /* Default to right aligning. Most columns will use that. */
+    text-align: right;
+}
+
+table.sports-reference td.left {
+    text-align: left;
 }
 
 table.sports-reference tr td:first-child {
