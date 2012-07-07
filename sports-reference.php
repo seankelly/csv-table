@@ -50,12 +50,7 @@ class srTable {
 
             // Count the number of a-z character to try guess if it's a header.
             $count = preg_match_all('/[a-z]/i', $row, $matches);
-            if (($count / $len) > 0.5) {
-                $is_header = TRUE;
-            }
-            else {
-                $is_header = FALSE;
-            }
+            $is_header = (($count / $len) > 0.5);
 
             array_push($final_html, srTable::make_row($is_header, $fields));
         }
