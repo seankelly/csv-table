@@ -39,12 +39,16 @@ class srTable {
         // Content is not null. Assume it's CSV data and try to make sense of it.
         $rows = str_getcsv($content, "\n");
         foreach ($rows as &$row) {
+            $len = strlen($row);
+            if ($len == 0) {
+                continue;
+            }
+
             $fields = str_getcsv($row);
 
             // Count the number of a-z character to try guess if it's a header.
             $count = preg_match_all('/[a-z]/i', $row, $matches);
-            $len = strlen($row);
-            if (($len > 0) && (($count / $len) > 0.5)) {
+            if (($count / $len) > 0.5) {
                 $is_header = TRUE;
                 $opening_tag = '<td>';
                 $closing_tag = '</td>';
