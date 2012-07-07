@@ -13,6 +13,16 @@ Author URI:
 */
 
 class srTable {
+    public function init() {
+        add_filter('comment_text', array('srTable', 'shortcode_in_comment'));
+        add_action('wp_enqueue_scripts', array('srTable', 'enqueue_scripts'));
+    }
+
+    public function enqueue_scripts() {
+        $url = plugins_url( '/sr-table.css', __FILE__);
+        wp_enqueue_style('sports-reference', $url);
+    }
+
     public function shortcode_in_comment($content) {
         global $shortcode_tags;
 
@@ -55,7 +65,7 @@ class srTable {
             array_push($final_html, srTable::make_row($is_header, $fields));
         }
 
-        return ('<table>'
+        return ('<table class="sports-reference">'
                . implode("", $final_html)
                . '</table>');
     }
@@ -82,4 +92,4 @@ class srTable {
     }
 }
 
-add_filter('comment_text', array('srTable', 'shortcode_in_comment'));
+srTable::init();
