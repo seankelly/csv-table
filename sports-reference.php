@@ -13,14 +13,20 @@ Author URI:
 */
 
 class srTable {
+    const VERSION = 1.0;
+
     public function init() {
         add_filter('comment_text', array('srTable', 'shortcode_in_comment'));
         add_action('wp_enqueue_scripts', array('srTable', 'enqueue_scripts'));
     }
 
     public function enqueue_scripts() {
-        $url = plugins_url( '/sr-table.css', __FILE__);
-        wp_enqueue_style('sports-reference', $url);
+        wp_enqueue_style('sports-reference', plugins_url( 'sr-table.css', __FILE__));
+        wp_enqueue_script('sports-reference',
+                          plugins_url('sr-table-sort.js', __FILE__),
+                          array('jquery'),
+                          srTable::VERSION
+            );
     }
 
     public function shortcode_in_comment($content) {
