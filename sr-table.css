@@ -17,8 +17,12 @@ table.sports-reference th {
     border: 1px solid rgb(170, 170, 170);
     border-bottom: 1px solid rgb(116, 118, 120);
     border-top: 1px solid rgb(116, 118, 120);
-    color: rgb(170, 0, 0);
     font-weight: bold;
+}
+
+table.sports-reference th.sortable {
+    color: rgb(170, 0, 0);
+    cursor: pointer;
 }
 
 table.sports-reference td {
