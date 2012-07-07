@@ -36,6 +36,8 @@ class srTable {
             return '';
         }
 
+        $final_html = array();
+
         // Content is not null. Assume it's CSV data and try to make sense of it.
         $rows = str_getcsv($content, "\n");
         foreach ($rows as &$row) {
@@ -59,12 +61,25 @@ class srTable {
                 $closing_tag = '</th>';
             }
 
-            $html = $opening_tag
-                . implode($closing_tag . $opening_tag, $fields)
-                . $closing_tag;
+            array_push($final_html, srTable::make_row($is_header, $fields));
         }
 
-        return '<!-- sr -->';
+        return '<!--' . implode("\n", $final_html) . '-->';
+    }
+
+    public function make_row($is_header, $columns) {
+        if ($is_header) {
+            $opening_tag = '<th>';
+            $closing_tag = '</th>';
+        }
+        else {
+            $opening_tag = '<td>';
+            $closing_tag = '</td>';
+        }
+
+        return ($opening_tag
+                . implode($closing_tag . $opening_tag, $columns)
+                . $closing_tag);
     }
 }
 
