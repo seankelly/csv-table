@@ -1,0 +1,11 @@
+/*
+ * Set the headers to red, bold text with gray background.
+ */
+table.sports-reference th {
+    background-color: rgb(218, 220, 222);
+    padding: 3px;
+    font-weight: bold;
+    border: 1px solid rgb(170, 170, 170);
+    border-top: 1px solid rgb(116, 118, 120);
+    border-bottom: 1px solid rgb(116, 118, 120);
+}
