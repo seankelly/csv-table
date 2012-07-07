@@ -72,23 +72,30 @@ class srTable {
 
     private function make_row($is_header, $columns) {
         if ($is_header) {
-            $opening_tag = '<th>';
-            $closing_tag = '</th>';
+            $tag = 'th';
         }
         else {
-            $opening_tag = '<td>';
-            $closing_tag = '</td>';
+            $tag = 'td';
         }
 
         foreach ($columns as &$col) {
-            $col = htmlspecialchars($col);
+            $col = srTable::wrap_column($col, $tag);
         }
 
-        return ('<tr>'
-                . $opening_tag
-                . implode($closing_tag . $opening_tag, $columns)
-                . $closing_tag
-                . '</tr>');
+        return ('<tr>' . implode('', $columns) . '</tr>');
+    }
+
+    private function wrap_column($column, $tag) {
+        $align = '';
+        $count = preg_match_all('/[a-z]/i', $column, $matches);
+        $len = strlen($column);
+        if (($count / $len) > 0.75) {
+            $align = ' class="left"';
+        }
+
+        return ('<' . $tag . $align . '>'
+                . htmlspecialchars($column)
+                . '</' . $tag . '>');
     }
 }
 
