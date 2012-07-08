@@ -134,6 +134,23 @@
     }
 
     function reset_table(table_id) {
+        var table = document.getElementById(table_id);
+        var body = table.tBodies[0];
+        var ordered = [];
+        for (var i = 0; i < body.rows.length; i++) {
+            var row = body.rows[i];
+            var $r = $(row);
+            var info = $r.data('info');
+            ordered.push({'i': info.row_id, 'row': row});
+        }
+
+        ordered.sort(function(a, b) {
+            return a.i > b.i;
+        });
+
+        for (i = 0; i < ordered.length; i++) {
+            body.appendChild(ordered[i].row);
+        }
     }
 
     $(document).ready(initialize);
