@@ -66,7 +66,7 @@
         });
 
         if (next_sort.order !== undefined) {
-            sort_table(info.table_id, info.nth, sort.order);
+            sort_table(info.table_id, info.nth, next_sort.order);
         }
         else {
             reset_table(info.table_id);
