@@ -6,20 +6,21 @@
             var $table = $(this);
             var column = 1;
 
+            // Since I'm creating the HTML for this, I know there's no
+            // id assigned already, so assign one now for easier
+            // manipulation later.
+            var table_id = 'sports-reference-' + id;
+            $table.attr('id', table_id);
+
             var process_header = function() {
                 var $th = $(this);
-                $th.data('nth', column);
+                $th.data('info', {'nth': column, 'table_id': table_id});
                 $th.data('sort', {'order': undefined});
                 $th.on('click', sort_column);
                 $th.toggleClass('sortable');
                 column++;
             }
 
-            // Since I'm creating the HTML for this, I know there's no
-            // id assigned already, so assign one now for easier
-            // manipulation later.
-            var table_id = 'sports-reference-' + id;
-            $table.attr('id', table_id);
             $table.find('th').each(process_header);
             id++;
         }
@@ -29,7 +30,7 @@
 
     function sort_column(ev) {
         var $th = $(ev.target);
-        var column = $th.data('nth');
+        var info = $th.data('info');
         var sort = $th.data('sort');
         var next_sort = {'order': undefined};
         var handle_class = function () {};
@@ -51,7 +52,7 @@
 
         handle_class($th);
         var $table = $th.parents('table.sports-reference');
-        var selector = 'tr td:nth-child(' + column + ')';
+        var selector = 'tr td:nth-child(' + info.nth + ')';
         $table.find(selector).each(function() {
             handle_class($(this));
         });
