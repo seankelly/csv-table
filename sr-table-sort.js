@@ -100,7 +100,6 @@
                 }
             }
         }
-
     }
 
     function get_el(text) {
