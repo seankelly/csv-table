@@ -65,12 +65,7 @@
             handle_class($(this));
         });
 
-        if (next_sort.order !== undefined) {
-            sort_table(info.table_id, info.nth, next_sort.order);
-        }
-        else {
-            reset_table(info.table_id);
-        }
+        sort_table(info.table_id, info.nth, next_sort.order);
 
         $th.data('sort', next_sort);
     }
@@ -123,30 +118,19 @@
         for (var i = 0; i < body.rows.length; i++) {
             var row = body.rows[i];
             var text = row.cells[column-1].textContent;
-            ordered.push({'i': i, 'text': text, 'row': row});
-        }
-
-        ordered.sort(cmp(sort_order));
-
-        for (i = 0; i < ordered.length; i++) {
-            body.appendChild(ordered[i].row);
-        }
-    }
-
-    function reset_table(table_id) {
-        var table = document.getElementById(table_id);
-        var body = table.tBodies[0];
-        var ordered = [];
-        for (var i = 0; i < body.rows.length; i++) {
-            var row = body.rows[i];
             var $r = $(row);
             var info = $r.data('info');
-            ordered.push({'i': info.row_id, 'row': row});
+            ordered.push({'i': info.row_id, 'text': text, 'row': row});
         }
 
-        ordered.sort(function(a, b) {
-            return a.i > b.i;
-        });
+        if (sort_order !== undefined) {
+            ordered.sort(cmp(sort_order));
+        }
+        else {
+            ordered.sort(function(a, b) {
+                return a.i > b.i;
+            });
+        }
 
         for (i = 0; i < ordered.length; i++) {
             body.appendChild(ordered[i].row);
