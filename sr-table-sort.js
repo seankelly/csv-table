@@ -7,6 +7,7 @@
             var process_header = function() {
                 var $th = $(this);
                 $th.data('nth', column);
+                $th.data('sort', undefined);
                 $th.on('click', sort_column);
                 $th.toggleClass('sortable');
                 column++;
