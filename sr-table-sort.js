@@ -21,7 +21,15 @@
                 column++;
             }
 
+            var row_id = 0;
+            var process_row = function() {
+                var $tr = $(this);
+                $tr.data('info', {'row_id': row_id, 'table_id': table_id});
+                row_id++;
+            }
+
             $table.find('th').each(process_header);
+            $table.find('tr').each(process_header);
             id++;
         }
 
