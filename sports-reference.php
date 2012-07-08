@@ -80,6 +80,10 @@ class srTable {
     private function make_row($is_header, $columns, &$thead) {
         if ($is_header) {
             $tag = 'th';
+            $row_class = '';
+            if ($thead === FALSE) {
+                $row_class = ' class="thead"';
+            }
         }
         else {
             $tag = 'td';
@@ -89,7 +93,7 @@ class srTable {
             $col = srTable::wrap_column($col, $tag);
         }
 
-        $html = '<tr>' . implode('', $columns) . '</tr>';
+        $html = '<tr' . $row_class . '>' . implode('', $columns) . '</tr>';
 
         if ($thead === FALSE) {
             $thead = TRUE;
