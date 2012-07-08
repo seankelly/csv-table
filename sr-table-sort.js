@@ -70,7 +70,7 @@
     function sort_table(table_id, column, sort_order) {
     }
 
-    function reset_table() {
+    function reset_table(table_id) {
     }
 
     $(document).ready(initialize);
