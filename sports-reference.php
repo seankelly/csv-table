@@ -59,7 +59,7 @@ class srTable {
         $rows = str_getcsv($content, "\n");
         foreach ($rows as &$row) {
             $len = strlen($row);
-            if ($len == 0) {
+            if ($len === 0) {
                 continue;
             }
 
@@ -91,7 +91,7 @@ class srTable {
 
         $html = '<tr>' . implode('', $columns) . '</tr>';
 
-        if ($thead == FALSE) {
+        if ($thead === FALSE) {
             $thead = TRUE;
             $html = '<thead>' . $html . '</thead>';
         }
