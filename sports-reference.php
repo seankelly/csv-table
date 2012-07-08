@@ -16,6 +16,10 @@ class srTable {
     const VERSION = 1.0;
 
     public function init() {
+        // Add the shortcode for posts.
+        add_shortcode('sr', array('srTable', 'sr_shortcode_cb'));
+        // This is for comment text. The shortcode is safe for including in
+        // comments, plus I think most people would want to use it there.
         add_filter('comment_text', array('srTable', 'shortcode_in_comment'));
         add_action('wp_enqueue_scripts', array('srTable', 'enqueue_scripts'));
     }
