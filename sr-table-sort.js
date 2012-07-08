@@ -58,10 +58,10 @@
         });
 
         if (next_sort.order !== undefined) {
-            sort_table(table_id, info.nth, sort.order);
+            sort_table(info.table_id, info.nth, sort.order);
         }
         else {
-            reset_table();
+            reset_table(info.table_id);
         }
 
         $th.data('sort', next_sort);
