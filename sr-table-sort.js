@@ -86,7 +86,47 @@
         }
     }
 
+    function cmp(order) {
+        // The two functions are using the is_text variable because
+        // I want strings and numbers to sort differently. Number, for
+        // 'asc', I actually want to be 'desc' in order to mimic how
+        // sports-reference does it.
+        var fn = {
+            'asc': function(is_text, a, b) {
+                if (!is_text) {
+                    return a - b;
+                }
+                return b > a;
+            },
+            'desc': function(is_text, a, b) {
+                if (!is_text) {
+                    return b - a;
+                }
+                return a > b;
+            }
+        };
+        var f = fn[order];
+        var g = function(a, b) {
+            var a_text = get_el(a.text);
+            var b_text = get_el(b.text);
+
+            var is_text = isNaN(parseFloat(a_text));
+            return f(is_text, a_text, b_text);
+        }
+        return g;
+    }
+
     function sort_table(table_id, column, sort_order) {
+        var table = document.getElementById(table_id);
+        var body = table.tBodies[0];
+        var ordered = [];
+        for (var i = 0; i < body.rows.length; i++) {
+            var row = body.rows[i];
+            var text = row.cells[column-1].textContent;
+            ordered.push({'row': i, 'text': text});
+        }
+
+        ordered.sort(cmp(sort_order));
     }
 
     function reset_table(table_id) {
