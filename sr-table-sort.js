@@ -1,5 +1,7 @@
 (function ($) {
     function initialize() {
+        var id = 1;
+
         var process_table = function() {
             var $table = $(this);
             var column = 1;
@@ -13,7 +15,13 @@
                 column++;
             }
 
+            // Since I'm creating the HTML for this, I know there's no
+            // id assigned already, so assign one now for easier
+            // manipulation later.
+            var table_id = 'sports-reference-' + id;
+            $table.attr('id', table_id);
             $table.find('th').each(process_header);
+            id++;
         }
 
         $('table.sports-reference').each(process_table);
