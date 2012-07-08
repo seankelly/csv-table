@@ -135,11 +135,23 @@
         };
         var f = fn[order];
         var g = function(a, b) {
-            var a_text = get_el(a.text);
-            var b_text = get_el(b.text);
+            var A = get_el(a.text);
+            var B = get_el(b.text);
 
-            var is_text = isNaN(parseFloat(a_text));
-            return f(is_text, a_text, b_text);
+            var a_text = isNaN(parseFloat(A));
+            var b_text = isNaN(parseFloat(B));
+            if (!a_text && !b_text) {
+                return f(a_text, A, B);
+            }
+            else if (a_text && !b_text) {
+                return 1;
+            }
+            else if (!a_text && b_text) {
+                return -1;
+            }
+            else {
+                return 0;
+            }
         }
         return g;
     }
