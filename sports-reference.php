@@ -52,6 +52,7 @@ class srTable {
             return '';
         }
 
+        $thead = FALSE;
         $final_html = array();
 
         // Content is not null. Assume it's CSV data and try to make sense of it.
@@ -68,7 +69,7 @@ class srTable {
             $count = preg_match_all('/[a-z]/i', $row, $matches);
             $is_header = (($count / $len) > 0.5);
 
-            array_push($final_html, srTable::make_row($is_header, $fields));
+            array_push($final_html, srTable::make_row($is_header, $fields, $thead));
         }
 
         return ('<table class="sports-reference">'
@@ -76,7 +77,7 @@ class srTable {
                . '</table>');
     }
 
-    private function make_row($is_header, $columns) {
+    private function make_row($is_header, $columns, &$thead) {
         if ($is_header) {
             $tag = 'th';
         }
@@ -88,7 +89,14 @@ class srTable {
             $col = srTable::wrap_column($col, $tag);
         }
 
-        return ('<tr>' . implode('', $columns) . '</tr>');
+        $html = '<tr>' . implode('', $columns) . '</tr>';
+
+        if ($thead == FALSE) {
+            $thead = TRUE;
+            $html = '<thead>' . $html . '</thead>';
+        }
+
+        return $html;
     }
 
     private function wrap_column($column, $tag) {
