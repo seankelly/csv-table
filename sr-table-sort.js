@@ -64,7 +64,7 @@
     function highlight_column(table_id, column) {
         var re = / *sorted/;
         var f = function(tbl) {
-            if (tbl === null) {
+            if (tbl === null || tbl === undefined) {
                 return;
             }
             var rows = tbl.rows;
