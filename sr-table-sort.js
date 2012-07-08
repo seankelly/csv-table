@@ -59,7 +59,7 @@
         }
 
         handle_class($th);
-        var $table = $th.parents('table.sports-reference');
+        var $table = $('#' + info.table_id);
         var selector = 'tr td:nth-child(' + info.nth + ')';
         $table.find(selector).each(function() {
             handle_class($(this));
