@@ -41,33 +41,66 @@
         var info = $th.data('info');
         var sort = $th.data('sort');
         var next_sort = {'order': undefined};
-        var handle_class = function () {};
+        // column is the column to highlight as sorted.
+        var column = info.nth - 1;
 
         if (sort.order === undefined) {
             next_sort.order = 'desc';
-            handle_class = function (th) {
-                th.addClass('sorted');
-            }
         } else if (sort.order === 'desc') {
             next_sort.order = 'asc';
-            // Still sorted, don't do anything with the 'sorted' class.
         } else {
             next_sort.order = undefined;
-            handle_class = function (th) {
-                th.removeClass('sorted');
-            }
+            // When removing all highlighting, set column to -1 to
+            // ensure it will never match against any cell index.
+            column = -1;
         }
 
-        handle_class($th);
-        var $table = $('#' + info.table_id);
-        var selector = 'tr td:nth-child(' + info.nth + ')';
-        $table.find(selector).each(function() {
-            handle_class($(this));
-        });
-
+        highlight_column(info.table_id, column);
         sort_table(info.table_id, info.nth, next_sort.order);
 
         $th.data('sort', next_sort);
+    }
+
+    function highlight_column(table_id, column) {
+        var re = / *sorted/;
+        var f = function(tbl) {
+            if (tbl === null) {
+                return;
+            }
+            var rows = tbl.rows;
+            for (var r = 0; r < rows.length; r++) {
+                for (var c = 0; c < rows[r].cells.length; c++) {
+                    var cell = rows[r].cells[c];
+                    var classes = cell.className;
+                    if (c !== column) {
+                        // Remove the class 'sorted'.
+                        classes = classes.replace(re, '');
+                    }
+                    else {
+                        // Add the class 'sorted', if it isn't already
+                        // preset.
+                        if (classes.indexOf('sorted') === -1) {
+                            classes += ' sorted';
+                        }
+                    }
+                    cell.className = classes;
+                }
+            }
+        }
+        var parts = ['tHead', 'tBodies', 'tFoot'];
+        var table = document.getElementById(table_id);
+        for (var i in parts) {
+            var prop = parts[i];
+            if (prop !== 'tBodies') {
+                f(table[prop]);
+            }
+            else {
+                for (var r = 0; r < table[prop].length; r++) {
+                    f(table[prop][r]);
+                }
+            }
+        }
+
     }
 
     function get_el(text) {
