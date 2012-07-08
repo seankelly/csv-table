@@ -29,7 +29,7 @@
             }
 
             $table.find('th').each(process_header);
-            $table.find('tr').each(process_header);
+            $table.find('tr').each(process_row);
             id++;
         }
 
