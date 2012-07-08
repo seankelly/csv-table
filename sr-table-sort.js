@@ -123,7 +123,7 @@
         for (var i = 0; i < body.rows.length; i++) {
             var row = body.rows[i];
             var text = row.cells[column-1].textContent;
-            ordered.push({'row': i, 'text': text});
+            ordered.push({'i': i, 'text': text, 'row': row});
         }
 
         ordered.sort(cmp(sort_order));
