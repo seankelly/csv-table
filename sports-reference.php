@@ -1,14 +1,14 @@
 <?php
 /**
  * @package sports-reference
- * @version 0.1
+ * @version 1.0
  */
 /*
 Plugin Name: sports-reference
 Plugin URI:
 Description: Displays CSV data from a Sports Reference site in a vaguely Sports Reference style.
 Author: Sean Kelly
-Version: 0.1
+Version: 1.0
 Author URI:
 */
 
