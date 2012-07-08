@@ -57,10 +57,17 @@
             handle_class($(this));
         });
 
+        if (next_sort.order !== undefined) {
+            sort_table(table_id, info.nth, sort.order);
+        }
+        else {
+            reset_table();
+        }
+
         $th.data('sort', next_sort);
     }
 
-    function sort_table(column, sort_order) {
+    function sort_table(table_id, column, sort_order) {
     }
 
     function reset_table() {
