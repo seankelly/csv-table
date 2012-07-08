@@ -59,5 +59,11 @@
         $th.data('sort', next_sort);
     }
 
+    function sort_table(column, sort_order) {
+    }
+
+    function reset_table() {
+    }
+
     $(document).ready(initialize);
 }(jQuery))
