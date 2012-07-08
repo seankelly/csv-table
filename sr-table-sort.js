@@ -77,7 +77,7 @@
 
     function get_el(text) {
         var check_for_wl = /^(\d+)-(\d+)$/;
-        var wl = check_for_wl.match(text);
+        var wl = text.match(check_for_wl);
         if (!wl) {
             return text;
         }
