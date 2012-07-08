@@ -20,7 +20,13 @@
 
     function sort_column(ev) {
         var $th = $(ev.target);
-        console.log($th);
+        var column = $th.data('nth');
+        $th.toggleClass('sorted');
+        var $table = $th.parents('table.sports-reference');
+        var selector = 'tr td:nth-child(' + column + ')';
+        $table.find(selector).each(function() {
+            $(this).toggleClass('sorted');
+        });
     }
 
     $(document).ready(initialize);
