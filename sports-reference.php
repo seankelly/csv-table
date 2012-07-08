@@ -81,7 +81,7 @@ class srTable {
         if ($is_header) {
             $tag = 'th';
             $row_class = '';
-            if ($thead === FALSE) {
+            if ($thead === TRUE) {
                 $row_class = ' class="thead"';
             }
         }
