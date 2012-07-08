@@ -150,6 +150,18 @@
         var ordered = [];
         for (var i = 0; i < body.rows.length; i++) {
             var row = body.rows[i];
+            if (sort_order !== undefined) {
+                // If sorting, hide any rows with the 'thead' class.
+                if (row.className.indexOf('thead') !== -1) {
+                    row.style.display = 'none';
+                }
+            }
+            else {
+                // When resetting, display thead rows.
+                if (row.className.indexOf('thead') !== -1) {
+                    row.style.display = '';
+                }
+            }
             var text = row.cells[column-1].textContent;
             var $r = $(row);
             var info = $r.data('info');
