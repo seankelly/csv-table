@@ -150,7 +150,7 @@
                 return -1;
             }
             else {
-                return 0;
+                return f(a_text, A, B);
             }
         }
         return g;
