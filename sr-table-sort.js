@@ -75,6 +75,17 @@
         $th.data('sort', next_sort);
     }
 
+    function get_el(text) {
+        var check_for_wl = /^(\d+)-(\d+)$/;
+        var wl = check_for_wl.match(text);
+        if (!wl) {
+            return text;
+        }
+        else {
+            return parseInt(wl[1]) - parseInt(wl[2]);
+        }
+    }
+
     function sort_table(table_id, column, sort_order) {
     }
 
