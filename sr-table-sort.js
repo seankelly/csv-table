@@ -127,6 +127,10 @@
         }
 
         ordered.sort(cmp(sort_order));
+
+        for (i = 0; i < ordered.length; i++) {
+            body.appendChild(ordered[i].row);
+        }
     }
 
     function reset_table(table_id) {
