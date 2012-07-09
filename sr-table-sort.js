@@ -57,6 +57,7 @@
 
         highlight_column(info.table_id, column);
         sort_table(info.table_id, info.nth, next_sort.order);
+        rerank_rows(info.table_id);
 
         $th.data('sort', next_sort);
     }
@@ -97,6 +98,26 @@
             else {
                 for (var r = 0; r < table[prop].length; r++) {
                     f(table[prop][r]);
+                }
+            }
+        }
+    }
+
+    // Only re-rank the rows if the first cell in the first tHead row
+    // contains the text 'Rk'.
+    function rerank_rows(table_id) {
+        var table = document.getElementById(table_id);
+        if (!table.tHead || table.tHead.rows[0].cells[0].textContent !== 'Rk') {
+            return;
+        }
+        var rank = 1;
+        for (var b = 0; b < table.tBodies.length; b++) {
+            var body = table.tBodies[b];
+            for (var r = 0; r < body.rows.length; r++) {
+                var cell = body.rows[r].cells[0];
+                if (cell.textContent.length > 0 && cell.textContent !== 'Rk') {
+                    cell.textContent = rank;
+                    rank++;
                 }
             }
         }
