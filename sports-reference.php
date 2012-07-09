@@ -111,7 +111,7 @@ class srTable {
         $align = '';
         $count = preg_match_all('/[a-z]/i', $column, $matches);
         $len = strlen($column);
-        if (($len > 0) && (($count / $len) > 0.75)) {
+        if (($len > 0) && (($count / $len) >= 0.5)) {
             $align = ' align="left"';
         }
         else {
