@@ -139,39 +139,65 @@
         // I want strings and numbers to sort differently. Number, for
         // 'asc', I actually want to be 'desc' in order to mimic how
         // sports-reference does it.
-        var fn = {
-            'asc': function(is_text, a, b) {
-                if (!is_text) {
-                    return a - b;
-                }
+        // Sort function for floats/numbers.
+        var fn_f = {
+            'asc': function(a, b) {
+                return a - b;
+            },
+            'desc': function(a, b) {
+                return b - a;
+            }
+        };
+
+        // Sort function for text.
+        var fn_t = {
+            'asc': function(a, b) {
                 return b > a;
             },
-            'desc': function(is_text, a, b) {
-                if (!is_text) {
-                    return b - a;
-                }
+            'desc': function(a, b) {
                 return a > b;
             }
         };
-        var f = fn[order];
+        // For the lookup table:
+        // n: NaN
+        // t: text
+        // f: float
+        //
+        //  B \ A  | empty | text | float
+        //  -------+-------+------+-------
+        //   empty |   0   |  1   |   1
+        //  -------+-------+------+-------
+        //    text |  -1   |  f   |   1
+        //  -------+-------+------+-------
+        //   float |  -1   | -1   |   f
+        //  -------+-------+------+-------
+        var lookup = {
+            'nn': function() { return 0; },
+            'nt': function() { return 1; },
+            'nf': function() { return 1; },
+            'tn': function() { return -1; },
+            'tt': function(order, a, b) { return (fn_t[order])(a, b); },
+            'tf': function() { return 1; },
+            'fn': function() { return -1; },
+            'ft': function() { return -1; },
+            'ff': function(order, a, b) { return (fn_f[order])(a, b); },
+        };
+        var re = /[a-z]/i;
+        var get_type = function(v) {
+            if (v === '') {
+                return 'n';
+            }
+            else if (re.test(v)) {
+                return 't';
+            }
+            return 'f';
+        }
         var g = function(a, b) {
             var A = get_el(a.text);
             var B = get_el(b.text);
 
-            var a_text = isNaN(parseFloat(A));
-            var b_text = isNaN(parseFloat(B));
-            if (!a_text && !b_text) {
-                return f(a_text, A, B);
-            }
-            else if (a_text && !b_text) {
-                return 1;
-            }
-            else if (!a_text && b_text) {
-                return -1;
-            }
-            else {
-                return f(a_text, A, B);
-            }
+            var key = get_type(A) + get_type(B);
+            return (lookup[key])(order, A, B);
         }
         return g;
     }
