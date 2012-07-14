@@ -3,6 +3,10 @@ table.sports-reference {
     border-spacing: 0px
 }
 
+table.sports-reference tr:hover {
+    background-color: rgb(116, 118, 120);
+}
+
 table.sports-reference tr:last-child {
     border-bottom: 1px solid rgb(116, 118, 120);
 }
