@@ -82,23 +82,38 @@ class srTable {
     }
 
     private function make_row($is_header, $columns, &$thead) {
+        $row_classes = array();
         if ($is_header) {
             $tag = 'th';
-            $row_class = '';
             if ($thead === TRUE) {
-                $row_class = ' class="thead"';
+                $row_classes[] = 'thead';
             }
         }
         else {
             $tag = 'td';
         }
 
+        $len = 0;
         foreach ($columns as &$col) {
+            $len += strlen($col);
             $col = srTable::wrap_column($col, $tag);
+        }
+
+        // If there is no data in the row, mark it as blank to
+        // de-emphasize the row.
+        if ($len == 0) {
+            $row_classes[] = 'blank_row';
+        }
+
+        $row_class = '';
+        if (count($row_classes) > 0) {
+            $row_class = ' class="' . implode(' ', $row_classes) . '"';
         }
 
         $html = '<tr' . $row_class . '>' . implode('', $columns) . '</tr>';
 
+        // Mark the first row as part of the thead section. This makes
+        // sorting much easier, as it can handle just the body rows.
         if ($thead === FALSE) {
             $thead = TRUE;
             $html = '<thead>' . $html . '</thead>';
