@@ -59,6 +59,9 @@ class srTable {
         $thead = FALSE;
         $final_html = array();
 
+        // Remove any '<br />' from the content.
+        $content = preg_replace('|<br />$|m', '', $content);
+
         // Content is not null. Assume it's CSV data and try to make sense of it.
         $rows = str_getcsv($content, "\n");
         foreach ($rows as &$row) {
