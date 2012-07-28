@@ -1,26 +1,26 @@
-table.sports-reference {
+table.sports-reference.nozebra {
     border-collapse: collapse;
     border-spacing: 0px
 }
 
-table.sports-reference tr:hover {
+table.sports-reference.nozebra tbody tr:hover {
     background-color: rgb(255, 255, 170);
 }
 
-table.sports-reference tr.blank_row {
+table.sports-reference.nozebra tr.blank_row {
     background-color: rgb(218, 220, 222);
 }
 
-table.sports-reference tr:last-child {
+table.sports-reference.nozebra tr:last-child {
     border-bottom: 1px solid rgb(116, 118, 120);
 }
 
-table.sports-reference th, table.sports-reference td {
+table.sports-reference.nozebra tr th, table.sports-reference.nozebra tr td {
     margin: 0px;
     padding: 3px;
 }
 
-table.sports-reference th {
+table.sports-reference.nozebra tr th {
     background-color: rgb(218, 220, 222);
     border: 1px solid rgb(170, 170, 170);
     border-bottom: 1px solid rgb(116, 118, 120);
@@ -28,36 +28,37 @@ table.sports-reference th {
     font-weight: bold;
 }
 
-table.sports-reference td {
+table.sports-reference.nozebra tbody tr td {
+    background-color: transparent;
     border: 1px dotted;
 }
 
-table.sports-reference tr th:first-child,
-table.sports-reference tr td:first-child {
+table.sports-reference.nozebra tr th:first-child,
+table.sports-reference.nozebra tr td:first-child {
     border-left: 1px solid rgb(116, 118, 120);
 }
 
-table.sports-reference tr th:last-child,
-table.sports-reference tr td:last-child {
+table.sports-reference.nozebra tr th:last-child,
+table.sports-reference.nozebra tr td:last-child {
     border-right: 1px solid rgb(116, 118, 120);
 }
 
-table.sports-reference th.sortable {
+table.sports-reference.nozebra thead th.sortable {
     color: rgb(170, 0, 0);
     cursor: pointer;
 }
 
-table.sports-reference td.sorted {
+table.sports-reference.nozebra tbody tr td.sorted {
     background-color: rgb(255, 255, 170);
     border-left: 2px solid rgb(116, 118, 120);
     border-right: 2px solid rgb(116, 118, 120);
 }
 
-table.sports-reference th.sorted {
+table.sports-reference.nozebra tr th.sorted {
     background-color: rgb(255, 255, 170);
     border: 2px solid rgb(116, 118, 120);
 }
 
-table.sports-reference tr:last-child td.sorted {
+table.sports-reference.nozebra tr:last-child td.sorted {
     border-bottom: 2px solid rgb(116, 118, 120);
 }

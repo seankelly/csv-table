@@ -79,7 +79,7 @@ class srTable {
             array_push($final_html, srTable::make_row($is_header, $fields, $thead));
         }
 
-        return ('<table class="sports-reference">'
+        return ('<table class="sports-reference nozebra">'
                . implode("", $final_html)
                . '</table>');
     }
