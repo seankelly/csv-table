@@ -104,7 +104,7 @@ class srTable {
 
         // If there is no data in the row, mark it as blank to
         // de-emphasize the row.
-        if ($len == 0) {
+        if ($len === 0) {
             $row_classes[] = 'blank_row';
         }
 
