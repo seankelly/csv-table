@@ -86,7 +86,23 @@ class srTable {
 
     private function make_row($is_header, $columns, &$thead) {
         $row_classes = array();
-        if ($is_header) {
+
+        // Loop through the columns twice in order to count the number of cells
+        // that have non-numeric characters in them.
+        $alpha_cells = 0;
+        $cells = count($columns);
+        $data_len = 0;
+        foreach ($columns as &$col) {
+            $count = preg_match_all('/[-+,.0-9]/i', $col, $matches);
+            $len = strlen($col);
+            $data_len += $len;
+            if ($len > 0) {
+                $alpha_cells += (($count / $len) <= 0.25);
+            }
+        }
+
+        $row_classes[] = "alpha-cells-$alpha_cells";
+        if ($alpha_cells >= (0.80 * $cells)) {
             $tag = 'th';
             if ($thead === TRUE) {
                 $row_classes[] = 'thead';
@@ -96,15 +112,13 @@ class srTable {
             $tag = 'td';
         }
 
-        $len = 0;
         foreach ($columns as &$col) {
-            $len += strlen($col);
             $col = srTable::wrap_column($col, $tag);
         }
 
         // If there is no data in the row, mark it as blank to
         // de-emphasize the row.
-        if ($len === 0) {
+        if ($data_len === 0) {
             $row_classes[] = 'blank_row';
         }
 
