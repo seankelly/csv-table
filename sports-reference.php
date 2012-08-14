@@ -1,19 +1,19 @@
 <?php
 /**
  * @package sports-reference
- * @version 1.4
+ * @version 1.5
  */
 /*
 Plugin Name: sports-reference
 Plugin URI:
 Description: Displays CSV data from a Sports Reference site in a vaguely Sports Reference style.
 Author: Sean Kelly
-Version: 1.4
+Version: 1.5
 Author URI:
 */
 
 class srTable {
-    const VERSION = 1.4;
+    const VERSION = 1.5;
 
     public function init() {
         // Add the shortcode for posts.
