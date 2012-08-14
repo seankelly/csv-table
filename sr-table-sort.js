@@ -11,11 +11,13 @@
             // manipulation later.
             var table_id = 'sports-reference-' + id;
             $table.attr('id', table_id);
+            // Associate the sorting with the table. That way, it's possible to
+            // keep track if the sorting column has changed or not.
+            $table.data('sort', {'order': undefined, 'column': -1});
 
             var process_header = function() {
                 var $th = $(this);
                 $th.data('info', {'nth': column, 'table_id': table_id});
-                $th.data('sort', {'order': undefined});
                 $th.on('click', sort_column);
                 $th.toggleClass('sortable');
                 column++;
@@ -39,12 +41,13 @@
     function sort_column(ev) {
         var $th = $(ev.target);
         var info = $th.data('info');
-        var sort = $th.data('sort');
-        var next_sort = {'order': undefined};
+        var $table = $('#' + info.table_id);
+        var sort = $table.data('sort');
+        var next_sort = {'order': undefined, 'column': -1};
         // column is the column to highlight as sorted.
         var column = info.nth - 1;
 
-        if (sort.order === undefined) {
+        if (sort.order === undefined || sort.column != column) {
             next_sort.order = 'desc';
         } else if (sort.order === 'desc') {
             next_sort.order = 'asc';
@@ -59,7 +62,8 @@
         sort_table(info.table_id, info.nth, next_sort.order);
         rerank_rows(info.table_id);
 
-        $th.data('sort', next_sort);
+        next_sort.column = column;
+        $table.data('sort', next_sort);
     }
 
     function highlight_column(table_id, column) {
