@@ -146,10 +146,14 @@
         // Sort function for floats/numbers.
         var fn_f = {
             'asc': function(a, b) {
-                return a - b;
+                var A = parseFloat(a);
+                var B = parseFloat(b);
+                return A - B;
             },
             'desc': function(a, b) {
-                return b - a;
+                var A = parseFloat(a);
+                var B = parseFloat(b);
+                return B - A;
             }
         };
 
