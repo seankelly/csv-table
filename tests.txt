@@ -1,0 +1,8 @@
+Paste these in a comment to check functionality.
+
+[sr]
+Stat,Dude
+123123123123123,<strong>a</strong>
+456,b&c
+789,c&d
+[/sr]
