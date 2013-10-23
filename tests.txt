@@ -5,4 +5,6 @@ Stat,Dude
 123123123123123,<strong>a</strong>
 456,b&c
 789,c&d
+1234,d&lt;e
+5678,e&gt;f
 [/sr]
