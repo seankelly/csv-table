@@ -174,7 +174,7 @@ class srTable {
         }
 
         return ('<' . $tag . $align . '>'
-                . htmlspecialchars($column)
+                . $column
                 . '</' . $tag . '>');
     }
 }
