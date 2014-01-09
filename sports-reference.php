@@ -33,16 +33,16 @@ License: GPL2
 
 namespace WGOM;
 
-class srTable {
+class TableMaker {
     const VERSION = 2.0;
 
     public function init() {
         // Add the shortcode for posts.
-        \add_shortcode('sr', array('WGOM\srTable', 'sr_shortcode_cb'));
+        \add_shortcode('sr', array('WGOM\TableMaker', 'sr_shortcode_cb'));
         // This is for comment text. The shortcode is safe for including in
         // comments, plus I think most people would want to use it there.
-        \add_filter('comment_text', array('WGOM\srTable', 'shortcode_in_comment'));
-        \add_action('wp_enqueue_scripts', array('WGOM\srTable', 'enqueue_scripts'));
+        \add_filter('comment_text', array('WGOM\TableMaker', 'shortcode_in_comment'));
+        \add_action('wp_enqueue_scripts', array('WGOM\TableMaker', 'enqueue_scripts'));
     }
 
     public function enqueue_scripts() {
@@ -50,7 +50,7 @@ class srTable {
         \wp_enqueue_script('sports-reference',
                           \plugins_url('sr-table-sort.js', __FILE__),
                           array('jquery'),
-                          srTable::VERSION
+                          TableMaker::VERSION
             );
     }
 
@@ -64,7 +64,7 @@ class srTable {
         $_shortcode_tags = $shortcode_tags;
         $shortcode_tags = array();
 
-        \add_shortcode('sr', array('WGOM\srTable', 'sr_shortcode_cb'));
+        \add_shortcode('sr', array('WGOM\TableMaker', 'sr_shortcode_cb'));
         $new_content = \do_shortcode($content);
 
         $shortcode_tags = $_shortcode_tags;
@@ -97,7 +97,7 @@ class srTable {
             $count = preg_match_all('/[a-z]/i', $row, $matches);
             $is_header = (($count / $len) > 0.5);
 
-            array_push($final_html, srTable::make_row($is_header, $fields, $thead));
+            array_push($final_html, TableMaker::make_row($is_header, $fields, $thead));
         }
 
         return ('<table class="sports-reference nozebra">'
@@ -134,7 +134,7 @@ class srTable {
         }
 
         foreach ($columns as &$col) {
-            $col = srTable::wrap_column($col, $tag);
+            $col = TableMaker::wrap_column($col, $tag);
         }
 
         // If there is no data in the row, mark it as blank to
@@ -181,4 +181,4 @@ class srTable {
     }
 }
 
-srTable::init();
+TableMaker::init();
