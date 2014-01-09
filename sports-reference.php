@@ -18,35 +18,37 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 /**
- * @package sports-reference
- * @version 1.5
+ * @package table-maker
+ * @version 2.0
  */
 /*
-Plugin Name: sports-reference
+Plugin Name: table-maker
 Plugin URI:
-Description: Displays CSV data from a Sports Reference site in a vaguely Sports Reference style.
+Description: Converts CSV formatted data to a table.
 Author: Sean Kelly
-Version: 1.5
+Version: 2.0
 Author URI:
 License: GPL2
 */
 
+namespace WGOM;
+
 class srTable {
-    const VERSION = 1.5;
+    const VERSION = 2.0;
 
     public function init() {
         // Add the shortcode for posts.
-        add_shortcode('sr', array('srTable', 'sr_shortcode_cb'));
+        \add_shortcode('sr', array('WGOM\srTable', 'sr_shortcode_cb'));
         // This is for comment text. The shortcode is safe for including in
         // comments, plus I think most people would want to use it there.
-        add_filter('comment_text', array('srTable', 'shortcode_in_comment'));
-        add_action('wp_enqueue_scripts', array('srTable', 'enqueue_scripts'));
+        \add_filter('comment_text', array('WGOM\srTable', 'shortcode_in_comment'));
+        \add_action('wp_enqueue_scripts', array('WGOM\srTable', 'enqueue_scripts'));
     }
 
     public function enqueue_scripts() {
-        wp_enqueue_style('sports-reference', plugins_url( 'sr-table.css', __FILE__));
-        wp_enqueue_script('sports-reference',
-                          plugins_url('sr-table-sort.js', __FILE__),
+        \wp_enqueue_style('sports-reference', plugins_url('sr-table.css', __FILE__));
+        \wp_enqueue_script('sports-reference',
+                          \plugins_url('sr-table-sort.js', __FILE__),
                           array('jquery'),
                           srTable::VERSION
             );
@@ -62,8 +64,8 @@ class srTable {
         $_shortcode_tags = $shortcode_tags;
         $shortcode_tags = array();
 
-        add_shortcode('sr', array('srTable', 'sr_shortcode_cb'));
-        $new_content = do_shortcode($content);
+        \add_shortcode('sr', array('WGOM\srTable', 'sr_shortcode_cb'));
+        $new_content = \do_shortcode($content);
 
         $shortcode_tags = $_shortcode_tags;
 
