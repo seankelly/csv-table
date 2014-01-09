@@ -46,8 +46,8 @@ class TableMaker {
     }
 
     public function enqueue_scripts() {
-        \wp_enqueue_style('sports-reference', plugins_url('sr-table.css', __FILE__));
-        \wp_enqueue_script('sports-reference',
+        \wp_enqueue_style('table-maker', plugins_url('sr-table.css', __FILE__));
+        \wp_enqueue_script('table-maker',
                           \plugins_url('sr-table-sort.js', __FILE__),
                           array('jquery'),
                           TableMaker::VERSION
