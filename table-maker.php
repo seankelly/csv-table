@@ -50,7 +50,8 @@ class TableMaker {
         \wp_enqueue_script('table-maker',
                           \plugins_url('table-sort.js', __FILE__),
                           array('jquery'),
-                          TableMaker::VERSION
+                          TableMaker::VERSION,
+                          true
             );
     }
 
