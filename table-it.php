@@ -18,11 +18,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 /**
- * @package table-maker
+ * @package table-it
  * @version 2.0
  */
 /*
-Plugin Name: table-maker
+Plugin Name: Table It
 Plugin URI:
 Description: Converts CSV formatted data to a table.
 Author: Sean Kelly
@@ -33,24 +33,25 @@ License: GPL2
 
 namespace WGOM;
 
-class TableMaker {
+class TableIt {
     const VERSION = 2.0;
 
     public function init() {
         // Add the shortcode for posts.
-        \add_shortcode('sr', array('WGOM\TableMaker', 'sr_shortcode_cb'));
+        \add_shortcode('sr', array('WGOM\TableIt', 'sr_shortcode_cb'));
+        \add_shortcode('table', array('WGOM\TableIt', 'table_shortcode_cb'));
         // This is for comment text. The shortcode is safe for including in
         // comments, plus I think most people would want to use it there.
-        \add_filter('comment_text', array('WGOM\TableMaker', 'shortcode_in_comment'));
-        \add_action('wp_enqueue_scripts', array('WGOM\TableMaker', 'enqueue_scripts'));
+        \add_filter('comment_text', array('WGOM\TableIt', 'shortcode_in_comment'));
+        \add_action('wp_enqueue_scripts', array('WGOM\TableIt', 'enqueue_scripts'));
     }
 
     public function enqueue_scripts() {
-        \wp_enqueue_style('table-maker', plugins_url('sr-table.css', __FILE__));
-        \wp_enqueue_script('table-maker',
+        \wp_enqueue_style('table-it', plugins_url('sr-table.css', __FILE__));
+        \wp_enqueue_script('table-it',
                           \plugins_url('table-sort.js', __FILE__),
                           array('jquery'),
-                          TableMaker::VERSION,
+                          TableIt::VERSION,
                           true
             );
     }
@@ -65,7 +66,7 @@ class TableMaker {
         $_shortcode_tags = $shortcode_tags;
         $shortcode_tags = array();
 
-        \add_shortcode('sr', array('WGOM\TableMaker', 'sr_shortcode_cb'));
+        \add_shortcode('sr', array('WGOM\TableIt', 'sr_shortcode_cb'));
         $new_content = \do_shortcode($content);
 
         $shortcode_tags = $_shortcode_tags;
@@ -98,7 +99,7 @@ class TableMaker {
             $count = preg_match_all('/[a-z]/i', $row, $matches);
             $is_header = (($count / $len) > 0.5);
 
-            array_push($final_html, TableMaker::make_row($is_header, $fields, $thead));
+            array_push($final_html, TableIt::make_row($is_header, $fields, $thead));
         }
 
         return ('<table class="sports-reference nozebra">'
@@ -135,7 +136,7 @@ class TableMaker {
         }
 
         foreach ($columns as &$col) {
-            $col = TableMaker::wrap_column($col, $tag);
+            $col = TableIt::wrap_column($col, $tag);
         }
 
         // If there is no data in the row, mark it as blank to
@@ -182,4 +183,4 @@ class TableMaker {
     }
 }
 
-TableMaker::init();
+TableIt::init();
