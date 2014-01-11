@@ -118,13 +118,23 @@ class TableIt {
                 $delimiter = $attrs['delimiter'];
         }
 
+        $show_header = FALSE;
+        if (array_key_exists($attrs, 'header')) {
+            $header_opt = strtolower($attrs['header']);
+            if ($header_opt === 'y' || $header_opt === 'yes' || $header_opt === 'true') {
+                $show_header = TRUE;
+            }
+        }
+
         $thead = FALSE;
         $final_html = array();
 
         // Remove any '<br />' from the content.
         $content = preg_replace('|<br />$|m', '', $content);
 
-        // Content is not null. Assume it's CSV data and try to make sense of it.
+        // Content is not null. Assume it's CSV data and try to make sense of
+        // it.
+        $row_index = 0;
         $rows = str_getcsv($content, "\n");
         foreach ($rows as &$row) {
             $len = strlen($row);
@@ -134,11 +144,8 @@ class TableIt {
 
             $fields = str_getcsv($row, $delimiter);
 
-            // Count the number of a-z character to try guess if it's a header.
-            $count = preg_match_all('/[a-z]/i', $row, $matches);
-            $is_header = (($count / $len) > 0.5);
-
-            array_push($final_html, TableIt::make_row($is_header, $fields, $thead));
+            array_push($final_html, TableIt::make_row($show_header && $row_index === 0, $fields, $thead));
+            $row_index++;
         }
 
         return ('<table>'
