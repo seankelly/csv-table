@@ -67,6 +67,7 @@ class TableIt {
         $shortcode_tags = array();
 
         \add_shortcode('sr', array('WGOM\TableIt', 'sr_shortcode_cb'));
+        \add_shortcode('table', array('WGOM\TableIt', 'table_shortcode_cb'));
         $new_content = \do_shortcode($content);
 
         $shortcode_tags = $_shortcode_tags;
@@ -103,6 +104,44 @@ class TableIt {
         }
 
         return ('<table class="sports-reference nozebra">'
+               . implode("", $final_html)
+               . '</table>');
+    }
+
+    public function table_shortcode_cb($attrs, $content=null) {
+        if (is_null($content)) {
+            return '';
+        }
+
+        $delimiter = ',';
+        if (array_key_exists($attrs, 'delimiter')) {
+                $delimiter = $attrs['delimiter'];
+        }
+
+        $thead = FALSE;
+        $final_html = array();
+
+        // Remove any '<br />' from the content.
+        $content = preg_replace('|<br />$|m', '', $content);
+
+        // Content is not null. Assume it's CSV data and try to make sense of it.
+        $rows = str_getcsv($content, "\n");
+        foreach ($rows as &$row) {
+            $len = strlen($row);
+            if ($len === 0) {
+                continue;
+            }
+
+            $fields = str_getcsv($row, $delimiter);
+
+            // Count the number of a-z character to try guess if it's a header.
+            $count = preg_match_all('/[a-z]/i', $row, $matches);
+            $is_header = (($count / $len) > 0.5);
+
+            array_push($final_html, TableIt::make_row($is_header, $fields, $thead));
+        }
+
+        return ('<table>'
                . implode("", $final_html)
                . '</table>');
     }
