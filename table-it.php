@@ -210,13 +210,13 @@ class TableIt {
 
     private function wrap_column($column, $tag) {
         $align = '';
-        $count = preg_match_all('/[a-z]/i', $column, $matches);
+        $alpha_count = preg_match_all('/[a-z]/i', $column, $matches);
         $len = strlen($column);
 
         if ($tag === 'th') {
             $align = ' align="center"';
         }
-        elseif (($len > 0) && (($count / $len) >= 0.5)) {
+        elseif (($len > 0) && (($alpha_count / $len) >= 0.5)) {
             $align = ' align="left"';
         }
         else {
