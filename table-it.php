@@ -212,15 +212,15 @@ class TableIt {
         $align = '';
         $count = preg_match_all('/[a-z]/i', $column, $matches);
         $len = strlen($column);
-        if (($len > 0) && (($count / $len) >= 0.5)) {
+
+        if ($tag === 'th') {
+            $align = ' align="center"';
+        }
+        elseif (($len > 0) && (($count / $len) >= 0.5)) {
             $align = ' align="left"';
         }
         else {
             $align = ' align="right"';
-        }
-
-        if ($tag === 'th') {
-            $align = ' align="center"';
         }
 
         return ('<' . $tag . $align . '>'
