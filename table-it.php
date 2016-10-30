@@ -162,8 +162,9 @@ class TableIt {
         $cells = count($columns);
         $data_len = 0;
         foreach ($columns as &$col) {
-            $count = preg_match_all('/[-+,.0-9]/i', $col, $matches);
-            $len = strlen($col);
+            $text = strip_tags($col);
+            $count = preg_match_all('/[-+,.0-9]/i', $text, $matches);
+            $len = strlen($text);
             $data_len += $len;
             if ($len > 0) {
                 $alpha_cells += (($count / $len) <= 0.25);
