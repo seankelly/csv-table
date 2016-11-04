@@ -18,11 +18,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 /**
- * @package table-it
+ * @package csvtable
  * @version 2.0
  */
 /*
-Plugin Name: Table It
+Plugin Name: CSV Table
 Plugin URI:
 Description: Converts CSV formatted data to a table.
 Author: Sean Kelly
@@ -33,25 +33,25 @@ License: GPL2
 
 namespace WGOM;
 
-class TableIt {
+class CsvTable {
     const VERSION = 2.0;
 
     public function init() {
         // Add the shortcode for posts.
-        \add_shortcode('sr', array('WGOM\TableIt', 'sr_shortcode_cb'));
-        \add_shortcode('table', array('WGOM\TableIt', 'table_shortcode_cb'));
+        \add_shortcode('sr', array('WGOM\CsvTable', 'sr_shortcode_cb'));
+        \add_shortcode('table', array('WGOM\CsvTable', 'table_shortcode_cb'));
         // This is for comment text. The shortcode is safe for including in
         // comments, plus I think most people would want to use it there.
-        \add_filter('comment_text', array('WGOM\TableIt', 'shortcode_in_comment'));
-        \add_action('wp_enqueue_scripts', array('WGOM\TableIt', 'enqueue_scripts'));
+        \add_filter('comment_text', array('WGOM\CsvTable', 'shortcode_in_comment'));
+        \add_action('wp_enqueue_scripts', array('WGOM\CsvTable', 'enqueue_scripts'));
     }
 
     public function enqueue_scripts() {
-        \wp_enqueue_style('table-it', plugins_url('sr-table.css', __FILE__));
-        \wp_enqueue_script('table-it',
+        \wp_enqueue_style('csv-table', plugins_url('sr-table.css', __FILE__));
+        \wp_enqueue_script('csv-table',
                           \plugins_url('table-sort.js', __FILE__),
                           array('jquery'),
-                          TableIt::VERSION,
+                          CsvTable::VERSION,
                           true
             );
     }
@@ -66,8 +66,8 @@ class TableIt {
         $_shortcode_tags = $shortcode_tags;
         $shortcode_tags = array();
 
-        \add_shortcode('sr', array('WGOM\TableIt', 'sr_shortcode_cb'));
-        \add_shortcode('table', array('WGOM\TableIt', 'table_shortcode_cb'));
+        \add_shortcode('sr', array('WGOM\CsvTable', 'sr_shortcode_cb'));
+        \add_shortcode('table', array('WGOM\CsvTable', 'table_shortcode_cb'));
         $new_content = \do_shortcode($content);
 
         $shortcode_tags = $_shortcode_tags;
@@ -100,7 +100,7 @@ class TableIt {
             $count = preg_match_all('/[a-z]/i', $row, $matches);
             $is_header = (($count / $len) > 0.5);
 
-            array_push($final_html, TableIt::make_row($is_header, $fields, $thead));
+            array_push($final_html, CsvTable::make_row($is_header, $fields, $thead));
         }
 
         return ('<table class="sports-reference nozebra">'
@@ -144,7 +144,7 @@ class TableIt {
 
             $fields = str_getcsv($row, $delimiter);
 
-            array_push($final_html, TableIt::make_row($show_header && $row_index === 0, $fields, $thead));
+            array_push($final_html, CsvTable::make_row($show_header && $row_index === 0, $fields, $thead));
             $row_index++;
         }
 
@@ -183,7 +183,7 @@ class TableIt {
         }
 
         foreach ($columns as &$col) {
-            $col = TableIt::wrap_column($col, $tag);
+            $col = CsvTable::wrap_column($col, $tag);
         }
 
         // If there is no data in the row, mark it as blank to
@@ -230,4 +230,4 @@ class TableIt {
     }
 }
 
-TableIt::init();
+CsvTable::init();
